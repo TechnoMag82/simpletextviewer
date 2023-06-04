@@ -1,0 +1,7 @@
+keywords=int long double float
+comments_single=//
+comments_block=/* */
+objects=Array List Set
+macros=
+braces=[ ] { } ( )
+control_characters=+ , . - -> * ! ?
