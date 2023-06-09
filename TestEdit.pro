@@ -17,15 +17,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     basesyntaxconfig.cpp \
+    colorthemeloader.cpp \
     commonsyntaxhighlighter.cpp \
+    linenumberarea.cpp \
     main.cpp \
     mainwindow.cpp \
     syntaxconfigloader.cpp
 
 HEADERS += \
     basesyntaxconfig.h \
+    colorthemeloader.h \
     commonsyntaxhighlighter.h \
     consts.h \
+    linenumberarea.h \
     mainwindow.h \
     syntaxconfigloader.h
 

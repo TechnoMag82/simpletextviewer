@@ -99,7 +99,9 @@ void SyntaxConfigLoader::loadConfig(QString openFilePath)
         while (configStream.atEnd() != true)
         {
             temp = configStream.readLine(0);
-            readValues(temp);
+            if (temp.length() > 0 && temp.at(0) != ';') {
+                readValues(temp);
+            }
         }
         syntaxConfig.close();
     }

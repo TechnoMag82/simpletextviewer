@@ -6,6 +6,7 @@
 #include <QDebug>
 
 #include "basesyntaxconfig.h"
+#include "colorthemeloader.h"
 #include "consts.h"
 
 class CommonSyntaxHighlighter : public QSyntaxHighlighter
@@ -14,6 +15,7 @@ class CommonSyntaxHighlighter : public QSyntaxHighlighter
 
     private:
         BaseSyntaxConfig *syntaxConfig = nullptr;
+        ColorThemeLoader *colorTheme = nullptr;
         QStringList listForHiglight;
 //        bool insideString = false;
 //        bool insideBaseString = false;
@@ -31,7 +33,7 @@ class CommonSyntaxHighlighter : public QSyntaxHighlighter
         CommonSyntaxHighlighter(QTextDocument *paremt = 0);
         void highlightBlock(const QString &str);
         void assignSyntaxConfig(BaseSyntaxConfig *syntaxConfog);
-
+        void assignColorTheme(ColorThemeLoader *colorTheme);
 
 };
 

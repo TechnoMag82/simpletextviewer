@@ -8,6 +8,8 @@ CommonSyntaxHighlighter::CommonSyntaxHighlighter(QTextDocument* parent)
 
 void CommonSyntaxHighlighter::highlightBlock(const QString &str)
 {
+    if (syntaxConfig == nullptr || colorTheme == nullptr)
+        return;
     int strLength = str.length();
     for (int i = 0; i < strLength; i++) {
 
@@ -15,7 +17,7 @@ void CommonSyntaxHighlighter::highlightBlock(const QString &str)
 
         if (highlightState == insideBaseString || highlightState == insideString) {
             if ((str.mid(i, 2) == "\\\"") || (str.mid(i, 2) == "\\\'")) {
-                setFormat(i, 2, Qt::green);
+                setFormat(i, 2, colorTheme->getStringsColor());
                 i+=2;
                 continue;
             }
@@ -25,29 +27,29 @@ void CommonSyntaxHighlighter::highlightBlock(const QString &str)
 
         if (highlightState == insideBaseString) {
             if (str.at(i) == '\"') {
-                setFormat(i, 1, Qt::green);
+                setFormat(i, 1, colorTheme->getStringsColor());
                 highlightState = normal;
                 continue;
             } else {
-                setFormat(i, 1, Qt::green);
+                setFormat(i, 1, colorTheme->getStringsColor());
                 continue;
             }
         } else if (highlightState == insideString) {
             if (str.at(i) == '\'') {
-                setFormat(i, 1, QColor(19, 122, 33));
+                setFormat(i, 1, colorTheme->getCharsColor());
                 highlightState = normal;
                 continue;
             } else {
-                setFormat(i, 1, QColor(19, 122, 33));
+                setFormat(i, 1, colorTheme->getCharsColor());
                 continue;
             }
         } else if (highlightState == insideBlockComment) {
             if (str.mid(i, 2) == syntaxConfig->getCommentBlock().at(1)) {
-                setFormat(i, 2, Qt::darkGray);
+                setFormat(i, 2, colorTheme->getCommentBlockColor());
                 highlightState = normal;
                 continue;
             } else {
-                setFormat(i, 1, Qt::darkGray);
+                setFormat(i, 1, colorTheme->getCommentBlockColor());
                 continue;
             }
         }
@@ -57,41 +59,41 @@ void CommonSyntaxHighlighter::highlightBlock(const QString &str)
         if (syntaxConfig->getBraces().contains(str.at(i))) {
             setFormat(i, 1, QColor(255, 134, 2));
         } else if (str.mid(i, 2) == syntaxConfig->getCommentSingleLine()) {
-            setFormat(i, strLength - i, Qt::darkGray);
+            setFormat(i, strLength - i, colorTheme->getCommentSingleLineColor());
             break;
         } else if (str.mid(i, 2) == syntaxConfig->getCommentBlock().at(0)) {
-            setFormat(i, strLength - i, Qt::darkGray);
+            setFormat(i, strLength - i, colorTheme->getCommentSingleLineColor());
             highlightState = insideBlockComment;
             continue;
         } else if (str.at(i) == '\"') {
-            setFormat(i, 1, Qt::green);
+            setFormat(i, 1, colorTheme->getStringsColor());
             highlightState = insideBaseString;
             continue;
         } else if (str.at(i) == '\'') {
-            setFormat(i, 1, QColor(19, 122, 33));
+            setFormat(i, 1, colorTheme->getCharsColor());
             highlightState = insideString;
             continue;
         } else {
             QString strKeyword = getKeyword(i, syntaxConfig->getKeywords(), str);
             if (!strKeyword.isEmpty()) {
-                setFormat(i, strKeyword.length(), Qt::blue);
+                setFormat(i, strKeyword.length(), colorTheme->getKeywordColor());
                 i+=strKeyword.length() - 1;
             }
             strKeyword = getKeyword(i, syntaxConfig->getObjects(), str);
             if (!strKeyword.isEmpty()) {
-                setFormat(i, strKeyword.length(), Qt::darkCyan);
+                setFormat(i, strKeyword.length(), colorTheme->getObjectColor());
                 i+=strKeyword.length() - 1;
             }
             strKeyword = getCharacters(i, syntaxConfig->getControlCharacters(), str);
             if (!strKeyword.isEmpty()) {
-                setFormat(i, strKeyword.length(), Qt::darkMagenta);
+                setFormat(i, strKeyword.length(), colorTheme->getControlCharacterColor());
                 i+=strKeyword.length() - 1;
             }
 
             // find number
             int isNumber1 = isNumber(i, str);
             if (isNumber1 > 0) {
-                setFormat(i, isNumber1, Qt::red);
+                setFormat(i, isNumber1, colorTheme->getNumbersColor());
                 i+=isNumber1;
             } else {
                 i+=abs(isNumber1);
@@ -104,6 +106,11 @@ void CommonSyntaxHighlighter::highlightBlock(const QString &str)
 void CommonSyntaxHighlighter::assignSyntaxConfig(BaseSyntaxConfig *syntaxConfog)
 {
     this->syntaxConfig = syntaxConfog;
+}
+
+void CommonSyntaxHighlighter::assignColorTheme(ColorThemeLoader *colorTheme)
+{
+    this->colorTheme = colorTheme;
 }
 
 

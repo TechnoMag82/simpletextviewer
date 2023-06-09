@@ -11,6 +11,6 @@ int main(int argc, char *argv[])
     } else {
         w = new MainWindow();
     }
-    w->show();
+    w->showMaximized();
     return a.exec();
 }
