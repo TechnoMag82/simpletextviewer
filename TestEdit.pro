@@ -16,24 +16,31 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    appsettingsloader.cpp \
     basesyntaxconfig.cpp \
+    codeeditor.cpp \
     colorthemeloader.cpp \
     commonsyntaxhighlighter.cpp \
+    dialogabout.cpp \
     linenumberarea.cpp \
     main.cpp \
     mainwindow.cpp \
     syntaxconfigloader.cpp
 
 HEADERS += \
+    appsettingsloader.h \
     basesyntaxconfig.h \
+    codeeditor.h \
     colorthemeloader.h \
     commonsyntaxhighlighter.h \
     consts.h \
+    dialogabout.h \
     linenumberarea.h \
     mainwindow.h \
     syntaxconfigloader.h
 
 FORMS += \
+    dialogabout.ui \
     mainwindow.ui
 
 # Default rules for deployment.

@@ -11,18 +11,20 @@
 class ColorThemeLoader
 {
     private:
-        QColor background;
-        QColor baseTextColor;
-        QColor keyword;
-        QColor commentSingleLine;
-        QColor commentBlock;
-        QColor object;
-        QColor macros;
-        QColor braces;
-        QColor controlCharacter;
-        QColor strings;
-        QColor chars;
-        QColor numbers;
+        QColor background = Qt::white;
+        QColor baseTextColor = Qt::black;
+        QColor currentLine = Qt::lightGray;
+        QColor lineNumber = Qt::black;
+        QColor keyword = Qt::blue;
+        QColor commentSingleLine = Qt::gray;
+        QColor commentBlock = Qt::gray;
+        QColor object = Qt::cyan;
+        QColor macros = Qt::darkGray;
+        QColor braces = Qt::darkMagenta;
+        QColor controlCharacter = Qt::magenta;
+        QColor strings = Qt::green;
+        QColor chars = Qt::green;
+        QColor numbers = Qt::red;
 
         void readValues(QString line);
         QColor parseColor(QString color);
@@ -44,6 +46,8 @@ class ColorThemeLoader
         QColor & getBackgroundColor();
         QColor & getBaseTextColor();
         QColor & getNumbersColor();
+        QColor & getCurrentLineColor();
+        QColor & getLineNumberColor();
 };
 
 #endif // COLORTHEMELOADER_H

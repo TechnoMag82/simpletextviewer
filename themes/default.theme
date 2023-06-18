@@ -1,0 +1,13 @@
+background=#FFFFFF
+base_text_color=#000000
+keywords=#000C80
+braces=#FFAC23
+comments=#858585
+objects=#000000
+control_characters=#000000
+macros=#000000
+strings=#115C00
+chars=#115C00
+numbers=#FF0000
+line_number=#000000
+current_line=#C7C7C7

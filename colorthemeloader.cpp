@@ -60,6 +60,16 @@ QColor &ColorThemeLoader::getNumbersColor()
     return numbers;
 }
 
+QColor &ColorThemeLoader::getCurrentLineColor()
+{
+    return currentLine;
+}
+
+QColor &ColorThemeLoader::getLineNumberColor()
+{
+    return lineNumber;
+}
+
 void ColorThemeLoader::readValues(QString line)
 {
     QString color = line.right(7);
@@ -96,6 +106,12 @@ void ColorThemeLoader::readValues(QString line)
     }
     if (line.startsWith(KEY_NUMBERS)) {
         numbers = parseColor(color);
+    }
+    if (line.startsWith(KEY_CURRENT_LINE)) {
+        currentLine = parseColor(color);
+    }
+    if (line.startsWith(KEY_LINE_NUMBER)) {
+        lineNumber = parseColor(color);
     }
 }
 

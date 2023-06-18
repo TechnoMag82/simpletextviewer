@@ -1,4 +1,4 @@
-keywords=int bool char byte long double float void if else switch case new delete break continue return true false for foreach null NULL nullptr this const public class private enum
+keywords=int bool char byte long double float void if else switch case break continue return true false for foreach null this const public class private enum var val lateinit where let when
 comments_single=//
 comments_block=/* */
 preprocessor=

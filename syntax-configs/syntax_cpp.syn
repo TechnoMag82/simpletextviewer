@@ -1,7 +1,8 @@
-keywords=int long double float
+keywords=int bool char byte long double float void if else switch case new delete break continue return true false for foreach null NULL nullptr this const public class private enum
 comments_single=//
 comments_block=/* */
-objects=Array List Set
-macros=
-braces=[ ] { } " ' ( ) < >
-control_characters=+ , . - -> * ! ?
+preprocessor=#include #ifndef #define #endif
+objects=Array List Set QString QFile QColor QStringList QIcon QAction
+macros=SIGNAL tr
+braces=[ ] { } ( )
+control_characters=|| && :: << >> -> => <= != == & ! ? = . , + - = | ; < > *

@@ -1,10 +1,13 @@
-background=#000000
+background=#00111E
 base_text_color=#FFFFFF
 keywords=#3370DF
 braces=#FFAC23
 comments=#979797
-objects=#4DC439
+objects=#107E80
 control_characters=#C45339
 macros=#39C4A7
 strings=#39C43F
 chars=#39C43F
+numbers=#CD2412
+line_number=#6A7C7D
+current_line=#474F5C

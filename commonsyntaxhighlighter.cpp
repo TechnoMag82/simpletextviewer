@@ -44,7 +44,8 @@ void CommonSyntaxHighlighter::highlightBlock(const QString &str)
                 continue;
             }
         } else if (highlightState == insideBlockComment) {
-            if (str.mid(i, 2) == syntaxConfig->getCommentBlock().at(1)) {
+            if (syntaxConfig->getCommentBlock().size() > 0 &&
+                    str.mid(i, 2) == syntaxConfig->getCommentBlock().at(1)) {
                 setFormat(i, 2, colorTheme->getCommentBlockColor());
                 highlightState = normal;
                 continue;
@@ -61,7 +62,8 @@ void CommonSyntaxHighlighter::highlightBlock(const QString &str)
         } else if (str.mid(i, 2) == syntaxConfig->getCommentSingleLine()) {
             setFormat(i, strLength - i, colorTheme->getCommentSingleLineColor());
             break;
-        } else if (str.mid(i, 2) == syntaxConfig->getCommentBlock().at(0)) {
+        } else if (syntaxConfig->getCommentBlock().size() > 0 &&
+                   str.mid(i, 2) == syntaxConfig->getCommentBlock().at(0)) {
             setFormat(i, strLength - i, colorTheme->getCommentSingleLineColor());
             highlightState = insideBlockComment;
             continue;
@@ -100,7 +102,6 @@ void CommonSyntaxHighlighter::highlightBlock(const QString &str)
             }
         }
     }
-    qDebug() << str;
 }
 
 void CommonSyntaxHighlighter::assignSyntaxConfig(BaseSyntaxConfig *syntaxConfog)
