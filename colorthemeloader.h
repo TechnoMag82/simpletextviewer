@@ -21,6 +21,7 @@ class ColorThemeLoader
         QColor object = Qt::cyan;
         QColor macros = Qt::darkGray;
         QColor braces = Qt::darkMagenta;
+        QColor preprocessor = Qt::darkCyan;
         QColor controlCharacter = Qt::magenta;
         QColor strings = Qt::green;
         QColor chars = Qt::green;
@@ -48,6 +49,7 @@ class ColorThemeLoader
         QColor & getNumbersColor();
         QColor & getCurrentLineColor();
         QColor & getLineNumberColor();
+        QColor & getPreprocessorColor();
 };
 
 #endif // COLORTHEMELOADER_H

@@ -11,3 +11,4 @@ chars=#115C00
 numbers=#FF0000
 line_number=#000000
 current_line=#C7C7C7
+preprocessor=#0C6F5A

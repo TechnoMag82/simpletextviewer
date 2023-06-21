@@ -71,8 +71,10 @@ void SyntaxConfigLoader::clearValues()
 
 void SyntaxConfigLoader::readToList(QStringList &list, QString values)
 {
-    list.clear();
-    list.append(values.split(' '));
+    if (!values.isEmpty()) {
+        list.clear();
+        list.append(values.split(' '));
+    }
 }
 
 QString SyntaxConfigLoader::getRawValue(QString line, uchar keyLength)
@@ -130,6 +132,16 @@ QStringList &SyntaxConfigLoader::getObjects()
 QStringList &SyntaxConfigLoader::getControlCharacters()
 {
     return controlCharacters;
+}
+
+QStringList &SyntaxConfigLoader::getMacros()
+{
+    return macros;
+}
+
+QStringList &SyntaxConfigLoader::getPreprocessor()
+{
+    return preprocessor;
 }
 
 QString &SyntaxConfigLoader::getCommentSingleLine()

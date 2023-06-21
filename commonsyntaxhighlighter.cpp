@@ -45,8 +45,8 @@ void CommonSyntaxHighlighter::highlightBlock(const QString &str)
             }
         } else if (highlightState == insideBlockComment) {
             if (syntaxConfig->getCommentBlock().size() > 0 &&
-                    str.mid(i, 2) == syntaxConfig->getCommentBlock().at(1)) {
-                setFormat(i, 2, colorTheme->getCommentBlockColor());
+                    str.mid(i, syntaxConfig->getCommentBlock().at(1).size()) == syntaxConfig->getCommentBlock().at(1)) {
+                setFormat(i, syntaxConfig->getCommentBlock().at(1).size(), colorTheme->getCommentBlockColor());
                 highlightState = normal;
                 continue;
             } else {
@@ -57,14 +57,12 @@ void CommonSyntaxHighlighter::highlightBlock(const QString &str)
 
         // find start of block or keywords
 
-        if (syntaxConfig->getBraces().contains(str.at(i))) {
-            setFormat(i, 1, QColor(255, 134, 2));
-        } else if (str.mid(i, 2) == syntaxConfig->getCommentSingleLine()) {
+        if (str.mid(i, 2) == syntaxConfig->getCommentSingleLine()) {
             setFormat(i, strLength - i, colorTheme->getCommentSingleLineColor());
             break;
         } else if (syntaxConfig->getCommentBlock().size() > 0 &&
-                   str.mid(i, 2) == syntaxConfig->getCommentBlock().at(0)) {
-            setFormat(i, strLength - i, colorTheme->getCommentSingleLineColor());
+                   str.mid(i, syntaxConfig->getCommentBlock().at(0).size()) == syntaxConfig->getCommentBlock().at(0)) {
+            setFormat(i, syntaxConfig->getCommentBlock().at(0).size(), colorTheme->getCommentSingleLineColor());
             highlightState = insideBlockComment;
             continue;
         } else if (str.at(i) == '\"') {
@@ -79,6 +77,16 @@ void CommonSyntaxHighlighter::highlightBlock(const QString &str)
             QString strKeyword = getKeyword(i, syntaxConfig->getKeywords(), str);
             if (!strKeyword.isEmpty()) {
                 setFormat(i, strKeyword.length(), colorTheme->getKeywordColor());
+                i+=strKeyword.length() - 1;
+            }
+            strKeyword = getKeyword(i, syntaxConfig->getMacros(), str);
+            if (!strKeyword.isEmpty()) {
+                setFormat(i, strKeyword.length(), colorTheme->getMacrosColor());
+                i+=strKeyword.length() - 1;
+            }
+            strKeyword = getKeyword(i, syntaxConfig->getPreprocessor(), str);
+            if (!strKeyword.isEmpty()) {
+                setFormat(i, strKeyword.length(), colorTheme->getPreprocessorColor());
                 i+=strKeyword.length() - 1;
             }
             strKeyword = getKeyword(i, syntaxConfig->getObjects(), str);
@@ -100,6 +108,14 @@ void CommonSyntaxHighlighter::highlightBlock(const QString &str)
             } else {
                 i+=abs(isNumber1);
             }
+
+            // find braces
+            strKeyword = getCharacters(i, syntaxConfig->getBraces(), str);
+            if (!strKeyword.isEmpty()) {
+                setFormat(i, strKeyword.length(), colorTheme->getBracesColor());
+                i+=strKeyword.length() - 1;
+            }
+
         }
     }
 }

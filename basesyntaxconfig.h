@@ -14,6 +14,8 @@ class BaseSyntaxConfig
         virtual QStringList & getCommentBlock() = 0;
         virtual QStringList & getObjects() = 0;
         virtual QStringList & getControlCharacters() =0;
+        virtual QStringList & getMacros() =0;
+        virtual QStringList & getPreprocessor() =0;
 };
 
 #endif // BASESYNTAXCONFIG_H

@@ -70,6 +70,11 @@ QColor &ColorThemeLoader::getLineNumberColor()
     return lineNumber;
 }
 
+QColor &ColorThemeLoader::getPreprocessorColor()
+{
+    return preprocessor;
+}
+
 void ColorThemeLoader::readValues(QString line)
 {
     QString color = line.right(7);
@@ -88,6 +93,9 @@ void ColorThemeLoader::readValues(QString line)
     }
     if (line.startsWith(KEY_OBJECTS)) {
         object = parseColor(color);
+    }
+    if (line.startsWith(KEY_PREPROCESSOR)) {
+        preprocessor = parseColor(color);
     }
     if (line.startsWith(KEY_MACROS)) {
         macros = parseColor(color);

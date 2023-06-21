@@ -50,6 +50,8 @@ class SyntaxConfigLoader : public BaseSyntaxConfig
         QStringList &getCommentBlock();
         QStringList &getObjects();
         QStringList &getControlCharacters();
+        QStringList &getMacros();
+        QStringList &getPreprocessor();
         QString &getCommentSingleLine();
 };
 

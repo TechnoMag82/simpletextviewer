@@ -1,0 +1,9 @@
+keywords=name attribute
+comments_single=
+comments_block=<!-- -->
+preprocessor=
+objects=
+macros=
+braces=[ ] { } ( ) </ /> < >
+control_characters=: =
+
