@@ -7,6 +7,8 @@ MainWindow::MainWindow(QWidget *parent, QString filePath)
 {
     ui->setupUi(this);
 
+    setWindowTitle(QApplication::applicationName());
+
     initMainMenu();
 
     plainTextEdit = new CodeEditor(ui->centralwidget);
@@ -37,6 +39,48 @@ void MainWindow::quitApp()
     close();
 }
 
+void MainWindow::showDialogAbout()
+{
+    DialogAbout *aboutDialog = new DialogAbout(this);
+    aboutDialog->exec();
+    delete aboutDialog;
+}
+
+void MainWindow::findNext()
+{
+   if (searchEdit->currentText().isEmpty())
+       return;
+   if (!isHistoryContains(searchEdit->currentText())) {
+       searchEdit->addItem(searchEdit->currentText());
+   }
+   QTextCursor cursor = plainTextEdit->textCursor();
+   QTextDocument::FindFlags flag;
+   if (checkBox->isChecked())
+       flag |= QTextDocument::FindCaseSensitively;
+   if (!plainTextEdit->find(searchEdit->currentText(), flag)) {
+        cursor.movePosition(QTextCursor::Start);
+        plainTextEdit->setTextCursor(cursor);
+   }
+}
+
+void MainWindow::findPrev()
+{
+    if (searchEdit->currentText().isEmpty())
+        return;
+    if (!isHistoryContains(searchEdit->currentText())) {
+        searchEdit->addItem(searchEdit->currentText());
+    }
+    QTextCursor cursor = plainTextEdit->textCursor();
+    QTextDocument::FindFlags flag;
+    flag |= QTextDocument::FindBackward;
+    if (checkBox->isChecked())
+        flag |= QTextDocument::FindCaseSensitively;
+    if (!plainTextEdit->find(searchEdit->currentText(), flag)) {
+         cursor.movePosition(QTextCursor::End);
+         plainTextEdit->setTextCursor(cursor);
+    }
+}
+
 void MainWindow::loadAppSettings()
 {
     AppSettingsLoader *appSettingsLoader = new AppSettingsLoader();
@@ -63,6 +107,8 @@ void MainWindow::initMainMenu()
 {
     ui->actionExit->setShortcut(QKeySequence("Esc"));
     connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(quitApp()));
+
+    connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(showDialogAbout()));
 }
 
 void MainWindow::initSearchLayout()
@@ -85,13 +131,25 @@ void MainWindow::initSearchLayout()
 
     buttonPrevFind = new QPushButton(ui->centralwidget);
     buttonPrevFind->setObjectName(QString::fromUtf8("buttonPrevFind"));
-    buttonPrevFind->setText(tr("<< Prev (F6)"));
+    buttonPrevFind->setText(tr("<< Prev (Shift+F3)"));
+
+    actFindPrev = new QAction(buttonPrevFind);
+    actFindPrev->setShortcut(QKeySequence("Shift+F3"));
+    buttonPrevFind->addAction(actFindPrev);
+    connect(actFindPrev, SIGNAL(triggered()), this, SLOT(findPrev()));
+    connect(buttonPrevFind, SIGNAL(clicked()), this, SLOT(findPrev()));
 
     horizontalLayout->addWidget(buttonPrevFind);
 
     buttonNextFind = new QPushButton(ui->centralwidget);
     buttonNextFind->setObjectName(QString::fromUtf8("buttonNextFind"));
-    buttonNextFind->setText(tr("Next (F7) >>"));
+    buttonNextFind->setText(tr("Next (F3) >>"));
+
+    actFindNext = new QAction(buttonNextFind);
+    actFindNext->setShortcut(QKeySequence("F3"));
+    buttonNextFind->addAction(actFindNext);
+    connect(actFindNext, SIGNAL(triggered()), this, SLOT(findNext()));
+    connect(buttonNextFind, SIGNAL(clicked()), this, SLOT(findNext()));
 
     horizontalLayout->addWidget(buttonNextFind);
 
@@ -118,5 +176,15 @@ void MainWindow::configurePlainTextEdit()
     plainTextEdit->applyColorTheme();
 
     syntaxHighlighter = new CommonSyntaxHighlighter(plainTextEdit->document());
+}
+
+bool MainWindow::isHistoryContains(QString item)
+{
+    int count = searchEdit->count();
+    for (int index = 0; index < count; index++) {
+        if (searchEdit->itemText(index).compare(item) == 0)
+            return true;
+    }
+    return false;
 }
 

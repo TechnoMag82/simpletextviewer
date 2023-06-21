@@ -9,12 +9,14 @@
 #include <QCheckBox>
 #include <QPushButton>
 #include <QDir>
+#include <QShortcut>
 
 #include "appsettingsloader.h"
 #include "syntaxconfigloader.h"
 #include "commonsyntaxhighlighter.h"
 #include "colorthemeloader.h"
 #include "codeeditor.h"
+#include "dialogabout.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -31,9 +33,14 @@ class MainWindow : public QMainWindow
 
     private slots:
         void quitApp();
+        void showDialogAbout();
+        void findNext();
+        void findPrev();
 
     private:
         QLabel *label;
+        QAction *actFindNext;
+        QAction *actFindPrev;
         QComboBox *searchEdit;
         QCheckBox *checkBox;
         QPushButton *buttonPrevFind;
@@ -51,5 +58,6 @@ class MainWindow : public QMainWindow
         void initMainMenu();
         void initSearchLayout();
         void configurePlainTextEdit();
+        bool isHistoryContains(QString item);
 };
 #endif // MAINWINDOW_H

@@ -1,5 +1,9 @@
 #include "syntaxconfigloader.h"
 
+SyntaxConfigLoader::SyntaxConfigLoader()
+{
+}
+
 SyntaxConfigLoader::ConfigType SyntaxConfigLoader::getConfigItemType(QString line)
 {
     ConfigType configType;
@@ -67,17 +71,13 @@ void SyntaxConfigLoader::clearValues()
 
 void SyntaxConfigLoader::readToList(QStringList &list, QString values)
 {
+    list.clear();
     list.append(values.split(' '));
 }
 
 QString SyntaxConfigLoader::getRawValue(QString line, uchar keyLength)
 {
     return line.right(line.length() - keyLength - 1);
-}
-
-SyntaxConfigLoader::SyntaxConfigLoader()
-{
-
 }
 
 void SyntaxConfigLoader::loadConfig(QString openFilePath)

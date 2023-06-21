@@ -16,10 +16,10 @@ class SyntaxConfigLoader : public BaseSyntaxConfig
         QString commentSingleLine;
         QStringList commentsBlock;
         QStringList objects;
-        QStringList controlCharacters;
+        QStringList controlCharacters = {"=", "+", "-", "*", "!", ":"};
         QStringList macros;
         QStringList preprocessor;
-        QStringList braces;
+        QStringList braces = {"{", "}", "<", ">", "[", "]", "(", ")"};
 
         enum ConfigType {
             KEYWORDS,
