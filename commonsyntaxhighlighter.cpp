@@ -136,7 +136,7 @@ QString CommonSyntaxHighlighter::getKeyword(int pos, QStringList &keyWords, cons
     QString strTemp = "";
 
     foreach (QString keyWord, keyWords) {
-        if (pos == 0 && pos + keyWord.size() < line.size()) {
+        if (pos == 0 && pos + keyWord.size() <= line.size()) {
             if ((!line.at(pos + keyWord.size()).isLetter()) &&
                     line.mid(pos, keyWord.size()) == keyWord
             ) {

@@ -17,11 +17,14 @@ Browsing with application source code in GUI mode on OS Linux with syntax highli
 ## Files configurations and paths
 
 Base resource files locate in ***/usr/share/simpletextviewer***
+
 - Color themes ***../themes***. For example: ***default.theme***
 - Rules of syntax highlighting ***../syntax***, For example: ***syntax_cpp.syn***
 
 > File name of syntax contain with **syntax_xxx.syn**
+> 
 > **where**
+> 
 >  xxx - extention of opened file for browse
 
 Base application config file location in
@@ -34,6 +37,7 @@ theme=default
 
 File of color theme contains color with KEY=COLOR
 
+```
     background=#FFFFFF
     base_text_color=#000000
     keywords=#000C80
@@ -48,6 +52,7 @@ File of color theme contains color with KEY=COLOR
     line_number=#000000
     current_line=#C7C7C7
     preprocessor=#0C6F5A
+```
 
 > Key names and color format must be strict keeps.
 
@@ -61,6 +66,7 @@ Where
 
 For example:
 
+```
     keywords=int bool char byte long double
     comments_single=//
     comments_block=/* */
@@ -69,13 +75,13 @@ For example:
     macros=SIGNAL tr
     braces=[ ] { } ( )
     control_characters=|| && :: << >> -> => <= != == & ! ? = . , + - = | ; < > *
+```
 
-For values such as "braces", "control_characters" importance is order: in begin placed complex values, further - simple values, 
+For values such as "braces", "control_characters" importance is order: in begin placed complex values, further - simple values.
 
 ## In planning
 
 - Settings dialog for create color themes and syntax rules
-- whitelist of highlighting text by filetypes
 
 
-(c) TechnoMag, june 20023
+(c) TechnoMag, june 2023

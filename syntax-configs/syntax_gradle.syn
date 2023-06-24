@@ -1,0 +1,8 @@
+keywords=android plugins id def debug release buildTyoes defaultConfig dependencies productFlavors true false
+comments_single=//
+comments_block=/* */
+preprocessor=
+objects=minSdk targetSdk compileSdk
+macros=implementation kapt dimention
+braces=[ ] { } ( ) < >
+control_characters=|| && :: << >> -> => <= != == & ! ? = . , + - = | ; < > *

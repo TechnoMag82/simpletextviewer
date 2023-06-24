@@ -82,7 +82,7 @@ QString SyntaxConfigLoader::getRawValue(QString line, uchar keyLength)
     return line.right(line.length() - keyLength - 1);
 }
 
-void SyntaxConfigLoader::loadConfig(QString openFilePath)
+bool SyntaxConfigLoader::loadConfig(QString openFilePath)
 {
     QFileInfo file(openFilePath);
 
@@ -106,7 +106,9 @@ void SyntaxConfigLoader::loadConfig(QString openFilePath)
             }
         }
         syntaxConfig.close();
+        return true;
     }
+    return false;
 }
 
 QStringList &SyntaxConfigLoader::getKeywords()

@@ -40,7 +40,7 @@ class SyntaxConfigLoader : public BaseSyntaxConfig
 
     public:
         SyntaxConfigLoader();
-        void loadConfig(QString openFilePath);
+        bool loadConfig(QString openFilePath);
 
 
         // BaseSyntaxConfig interface

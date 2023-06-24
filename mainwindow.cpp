@@ -95,9 +95,13 @@ void MainWindow::loadFile()
     textFile.open(QIODevice::ReadOnly| QIODevice::Text);
     QTextStream inText(&textFile);
     if (configLoader != nullptr && colorThemeLoader != nullptr) {
-        configLoader->loadConfig(filePath);
-        syntaxHighlighter->assignSyntaxConfig(configLoader);
-        syntaxHighlighter->assignColorTheme(colorThemeLoader);
+        if (configLoader->loadConfig(filePath)) {
+            syntaxHighlighter->assignSyntaxConfig(configLoader);
+            syntaxHighlighter->assignColorTheme(colorThemeLoader);
+        } else {
+            syntaxHighlighter->assignSyntaxConfig(nullptr);
+            syntaxHighlighter->assignColorTheme(nullptr);
+        }
     }
     plainTextEdit->setPlainText(inText.readAll());
     textFile.close();
