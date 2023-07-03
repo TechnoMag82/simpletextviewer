@@ -21,6 +21,11 @@ void CommonSyntaxHighlighter::highlightBlock(const QString &str)
                 i+=2;
                 continue;
             }
+        } else if ((str.mid(i, 2) == "\\\"") || (str.mid(i, 2) == "\\\'")) {
+            QTextCharFormat frm = format(i - 1);
+            setFormat(i, 2, frm);
+            i+=2;
+            continue;
         }
 
         // find end of block

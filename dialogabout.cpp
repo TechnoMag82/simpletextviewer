@@ -7,6 +7,7 @@ DialogAbout::DialogAbout(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->label->setText(QApplication::applicationName());
+    ui->label_2->setText(QApplication::applicationVersion());
 }
 
 DialogAbout::~DialogAbout()

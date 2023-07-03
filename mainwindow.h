@@ -36,11 +36,13 @@ class MainWindow : public QMainWindow
         void showDialogAbout();
         void findNext();
         void findPrev();
+        void focusSearch();
 
     private:
         QLabel *label;
         QAction *actFindNext;
         QAction *actFindPrev;
+        QAction *actFocusSearch;
         QComboBox *searchEdit;
         QCheckBox *checkBox;
         QPushButton *buttonPrevFind;

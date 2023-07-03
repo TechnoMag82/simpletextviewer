@@ -28,6 +28,9 @@ void MainWindow::setFilePathForOpen(QString filePath)
 
 MainWindow::~MainWindow()
 {
+    delete actFindNext;
+    delete actFindPrev;
+    delete actFocusSearch;
     delete configLoader;
     delete syntaxHighlighter;
     delete colorThemeLoader;
@@ -81,6 +84,11 @@ void MainWindow::findPrev()
     }
 }
 
+void MainWindow::focusSearch()
+{
+    searchEdit->setFocus();
+}
+
 void MainWindow::loadAppSettings()
 {
     AppSettingsLoader *appSettingsLoader = new AppSettingsLoader();
@@ -92,19 +100,21 @@ void MainWindow::loadFile()
 {
     qDebug() << "Load file: " << filePath;
     QFile textFile(filePath);
-    textFile.open(QIODevice::ReadOnly| QIODevice::Text);
-    QTextStream inText(&textFile);
-    if (configLoader != nullptr && colorThemeLoader != nullptr) {
-        if (configLoader->loadConfig(filePath)) {
-            syntaxHighlighter->assignSyntaxConfig(configLoader);
-            syntaxHighlighter->assignColorTheme(colorThemeLoader);
-        } else {
-            syntaxHighlighter->assignSyntaxConfig(nullptr);
-            syntaxHighlighter->assignColorTheme(nullptr);
+    if (textFile.open(QIODevice::ReadOnly| QIODevice::Text)) {
+        QTextStream inText(&textFile);
+        if (configLoader != nullptr && colorThemeLoader != nullptr) {
+            if (configLoader->loadConfig(filePath)) {
+                syntaxHighlighter->assignSyntaxConfig(configLoader);
+                syntaxHighlighter->assignColorTheme(colorThemeLoader);
+            } else {
+                syntaxHighlighter->assignSyntaxConfig(nullptr);
+                syntaxHighlighter->assignColorTheme(nullptr);
+            }
         }
+        plainTextEdit->setPlainText(inText.readAll());
+        textFile.close();
+        setWindowTitle(QApplication::applicationName() + " - " + this->filePath);
     }
-    plainTextEdit->setPlainText(inText.readAll());
-    textFile.close();
 }
 
 void MainWindow::initMainMenu()
@@ -130,6 +140,11 @@ void MainWindow::initSearchLayout()
     searchEdit->setObjectName(QString::fromUtf8("lineEdit"));
     searchEdit->setSizePolicy(QSizePolicy::Expanding , QSizePolicy::Fixed);
     searchEdit->setEditable(true);
+
+    actFocusSearch = new QAction(searchEdit);
+    actFocusSearch->setShortcut(QKeySequence("Ctrl+F"));
+    searchEdit->addAction(actFocusSearch);
+    connect(actFocusSearch, SIGNAL(triggered()), this, SLOT(focusSearch()));
 
     horizontalLayout->addWidget(searchEdit);
 
