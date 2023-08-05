@@ -51,19 +51,19 @@ void MainWindow::showDialogAbout()
 
 void MainWindow::findNext()
 {
-   if (searchEdit->currentText().isEmpty())
-       return;
-   if (!isHistoryContains(searchEdit->currentText())) {
-       searchEdit->addItem(searchEdit->currentText());
-   }
-   QTextCursor cursor = plainTextEdit->textCursor();
-   QTextDocument::FindFlags flag;
-   if (checkBox->isChecked())
-       flag |= QTextDocument::FindCaseSensitively;
-   if (!plainTextEdit->find(searchEdit->currentText(), flag)) {
+    if (searchEdit->currentText().isEmpty())
+        return;
+    if (!isHistoryContains(searchEdit->currentText())) {
+        searchEdit->addItem(searchEdit->currentText());
+    }
+    QTextCursor cursor = plainTextEdit->textCursor();
+    QTextDocument::FindFlags flag;
+    if (checkBox->isChecked())
+        flag |= QTextDocument::FindCaseSensitively;
+    if (!plainTextEdit->find(searchEdit->currentText(), flag)) {
         cursor.movePosition(QTextCursor::Start);
         plainTextEdit->setTextCursor(cursor);
-   }
+    }
 }
 
 void MainWindow::findPrev()
@@ -112,8 +112,13 @@ void MainWindow::loadFile()
             }
         }
         plainTextEdit->setPlainText(inText.readAll());
+        QFileInfo file1(filePath);
+        setWindowTitle(file1.fileName() + " - ( " + this->filePath + " )");
         textFile.close();
-        setWindowTitle(QApplication::applicationName() + " - " + this->filePath);
+
+        QMimeDatabase db;
+        QMimeType type = db.mimeTypeForFile(filePath);
+        setWindowIcon(QIcon::fromTheme(type.iconName()));
     }
 }
 

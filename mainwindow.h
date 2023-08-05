@@ -10,6 +10,7 @@
 #include <QPushButton>
 #include <QDir>
 #include <QShortcut>
+#include <QMimeDatabase>
 
 #include "appsettingsloader.h"
 #include "syntaxconfigloader.h"

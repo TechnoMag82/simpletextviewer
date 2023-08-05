@@ -1,8 +1,8 @@
-keywords=android plugins id def debug release buildTyoes defaultConfig dependencies productFlavors true false
+keywords=android plugins id def debug release buildTypes defaultConfig dependencies productFlavors true false apply plugin repositories copileOptions task
 comments_single=//
 comments_block=/* */
 preprocessor=
-objects=minSdk targetSdk compileSdk
+objects=minSdk targetSdk compileSdk targetSdkVersion compileSdkVersion
 macros=implementation kapt dimention
 braces=[ ] { } ( ) < >
 control_characters=|| && :: << >> -> => <= != == & ! ? = . , + - = | ; < > *

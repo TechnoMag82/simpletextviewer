@@ -19,6 +19,7 @@ SOURCES += \
     appsettingsloader.cpp \
     basesyntaxconfig.cpp \
     codeeditor.cpp \
+    colorlabel.cpp \
     colorthemeloader.cpp \
     commonsyntaxhighlighter.cpp \
     dialogabout.cpp \
@@ -31,6 +32,7 @@ HEADERS += \
     appsettingsloader.h \
     basesyntaxconfig.h \
     codeeditor.h \
+    colorlabel.h \
     colorthemeloader.h \
     commonsyntaxhighlighter.h \
     consts.h \

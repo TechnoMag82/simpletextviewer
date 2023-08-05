@@ -1,0 +1,8 @@
+keywords=begin end for while unit type uses class private var implementation interface public to do inherited integer function constructor destructor procedure if then repeat until true false try except result exit finally property read write nil const
+comments_single=//
+comments_block={ }
+preprocessor=
+objects=string integer boolean
+macros=
+braces=[ ] ( ) { } < >
+control_characters=:= => <= != & ! ? = . , + - = | ; * < >

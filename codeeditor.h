@@ -6,12 +6,19 @@
 #include <QSize>
 #include <QResizeEvent>
 #include <QPaintEvent>
+#include <QMouseEvent>
+#include <QTextCursor>
 #include <QPainter>
 #include <QRect>
 #include <QTextBlock>
 #include <QColor>
+#include <QDebug>
+#include <QRegExp>
+#include <QLabel>
 
 #include "linenumberarea.h"
+#include "colorlabel.h"
+#include "consts.h"
 
 class LineNumberArea;
 
@@ -20,6 +27,7 @@ class CodeEditor : public QPlainTextEdit
     Q_OBJECT
     public:
         explicit CodeEditor(QWidget *parent = nullptr);
+        ~CodeEditor();
 
         void lineNumberAreaPaintEvent(QPaintEvent *event);
         int lineNumberAreaWidth();
@@ -31,6 +39,7 @@ class CodeEditor : public QPlainTextEdit
 
     protected:
         void resizeEvent(QResizeEvent *event) override;
+        virtual void mouseMoveEvent(QMouseEvent *mouseEvent) override;
 
     private slots:
         void updateLineNumberAreaWidth(int newBlockCount);
@@ -43,6 +52,11 @@ class CodeEditor : public QPlainTextEdit
         QColor *currentLineColor = nullptr;
         QColor *backgroundColor = nullptr;
         QColor *textColor = nullptr;
+        ColorLabel *colorLabel = nullptr;
+        int stringPosition = -1;
+        QRegExp rx/*("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$")*/;
+        int oldX = 0;
+        int oldY = 0;
 
 };
 

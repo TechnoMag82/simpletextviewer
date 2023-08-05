@@ -3,7 +3,7 @@
 CommonSyntaxHighlighter::CommonSyntaxHighlighter(QTextDocument* parent)
     : QSyntaxHighlighter(parent)
 {
-
+    rx.setPattern("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$");
 }
 
 void CommonSyntaxHighlighter::highlightBlock(const QString &str)
@@ -78,6 +78,16 @@ void CommonSyntaxHighlighter::highlightBlock(const QString &str)
             setFormat(i, 1, colorTheme->getCharsColor());
             highlightState = insideString;
             continue;
+        } if (str.at(i) == '#') { // find color
+            if (rx.exactMatch(str.mid(i, 7).toUpper())) {
+                setFormat(i, 7, colorTheme->getNumbersColor());
+                i+=6;
+                continue;
+            } else if (rx.exactMatch(str.mid(i, 4).toUpper())) {
+                setFormat(i, 4, colorTheme->getNumbersColor());
+                i+=3;
+                continue;
+            }
         } else {
             QString strKeyword = getKeyword(i, syntaxConfig->getKeywords(), str);
             if (!strKeyword.isEmpty()) {
@@ -106,6 +116,7 @@ void CommonSyntaxHighlighter::highlightBlock(const QString &str)
             }
 
             // find number
+
             int isNumber1 = isNumber(i, str);
             if (isNumber1 > 0) {
                 setFormat(i, isNumber1, colorTheme->getNumbersColor());
@@ -142,21 +153,19 @@ QString CommonSyntaxHighlighter::getKeyword(int pos, QStringList &keyWords, cons
 
     foreach (QString keyWord, keyWords) {
         if (pos == 0 && pos + keyWord.size() <= line.size()) {
-            if ((!line.at(pos + keyWord.size()).isLetter()) &&
+            if (!line.at(pos + keyWord.size()).isLetter() &&
                     line.mid(pos, keyWord.size()) == keyWord
             ) {
                 strTemp = keyWord;
                 break;
             }
         } else if (pos > 0 && pos + keyWord.size() == line.size()) {
-            if ((!line.at(pos - 1).isLetter() &&
+            if (!line.at(pos - 1).isLetter() &&
                     line.mid(pos, keyWord.size()) == keyWord
-                    )
             ) {
                 strTemp = keyWord;
                 break;
             }
-
         } else if (pos > 0 && pos + keyWord.size() < line.size()) {
             if (line.mid(pos, keyWord.size()) == keyWord
                     &&
@@ -288,12 +297,3 @@ int CommonSyntaxHighlighter::isNumber(int pos, const QString &line)
    return strTemp;
 }
 
-bool CommonSyntaxHighlighter::charIsHex(const QChar &in)
-{
-    for (int i = 0; i <= sizeof(hex1); i++) {
-        if (hex1[i] == in) {
-            return true;
-        }
-    }
-    return false;
-}

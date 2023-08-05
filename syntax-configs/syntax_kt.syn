@@ -1,8 +1,8 @@
-keywords=int bool char byte long double float void if else switch case break continue return true false for foreach null this inner const abstract public class interface private enum var val lateinit where let when fun override import package constructor companion object init
+keywords=int bool char byte long double float void if else switch case break continue return true false for foreach null this inner const protected abstract public class interface private enum var val lateinit where when fun override import package constructor companion object init super try catch finally while data suspend is as open
 comments_single=//
 comments_block=/* */
-preprocessor=@Singleton @Inject @AndroidEntryPoint @Module @HiltViewModel @ApplicationContext
-objects=ArrayList HashSet HashMap String Boolean Int Char Queue List Unit Any
-macros=
+preprocessor=@HiltAndroidApp @Singleton @Inject @AndroidEntryPoint @Module @HiltViewModel @ApplicationContext @Deprecated @Entity @Dao @Ignore @ColumnInfo @PrimaryKey @Database @Query @Throws @PrimaryKey @Required @SerialisedName @Index
+objects=ArrayList HashSet HashMap String Boolean Int Char Queue List Unit Any LiveData Long
+macros=let launch also run apply
 braces=[ ] { } ( )
 control_characters=|| && :: << >> -> => <= != == & ! ? = . , + - = | ; < > *

@@ -4,6 +4,7 @@
 #include <QSyntaxHighlighter>
 #include <QTextDocument>
 #include <QDebug>
+#include <QRegExp>
 
 #include "basesyntaxconfig.h"
 #include "colorthemeloader.h"
@@ -17,8 +18,7 @@ class CommonSyntaxHighlighter : public QSyntaxHighlighter
         BaseSyntaxConfig *syntaxConfig = nullptr;
         ColorThemeLoader *colorTheme = nullptr;
         QStringList listForHiglight;
-//        bool insideString = false;
-//        bool insideBaseString = false;
+        QRegExp rx;
         enum HiglightState {normal = -1, insideBaseString, insideString, insideBlockComment};
 
         HiglightState highlightState = normal;
@@ -26,7 +26,6 @@ class CommonSyntaxHighlighter : public QSyntaxHighlighter
         QString getKeyword(int pos, QStringList &keyWords, const QString &line);
         QString getCharacters(int pos, QStringList &keyWords, const QString &line);
         int isNumber(int pos, const QString &line);
-        bool charIsHex(const QChar &in);
 
         bool isEndOfWord(const QChar &symbol);
     public:

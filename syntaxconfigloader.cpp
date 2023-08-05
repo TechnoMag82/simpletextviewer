@@ -4,6 +4,11 @@ SyntaxConfigLoader::SyntaxConfigLoader()
 {
 }
 
+SyntaxConfigLoader::~SyntaxConfigLoader()
+{
+
+}
+
 SyntaxConfigLoader::ConfigType SyntaxConfigLoader::getConfigItemType(QString line)
 {
     ConfigType configType;

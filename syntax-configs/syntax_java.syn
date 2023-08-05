@@ -1,8 +1,8 @@
-keywords=int bool char byte long double float void if else switch case new delete break continue return true false for foreach null this const public class private enum
+keywords=int boolean char byte long double float void if else switch case new delete break continue return true false for foreach null this const public class private enum import static super tra catch finally extends protected interface package final throws implements
 comments_single=//
 comments_block=/* */
-preprocessor=@Override
-objects=Array List Set Map String Boolean Integer Char
+preprocessor=@Override @HiltAndroidApp @Singleton @Inject @AndroidEntryPoint @Module @HiltViewModel @ApplicationContext @Deprecated @Entity @Dao @Ignore @ColumnInfo @PrimaryKey @Database @Query @Throws @PrimaryKey @Required @SerialisedName @Index @NonNull @Nullable
+objects=Array List ArrayList Set Map String Boolean Integer Char
 macros=
 braces=[ ] { } ( )
 control_characters=|| && :: << >> -> => <= != == & ! ? = . , + - = | ; < > *

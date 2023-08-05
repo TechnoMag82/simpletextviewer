@@ -2,7 +2,12 @@
 
 CodeEditor::CodeEditor(QWidget *parent) : QPlainTextEdit(parent)
 {
+    rx.setPattern("^([A-Fa-f0-9]{8}|[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$");
+    setMouseTracking(true);
     lineNumberArea = new LineNumberArea(this);
+
+    colorLabel = new ColorLabel(this);
+    colorLabel->setVisible(false);
 
     setFont(QFont("Consolas", 16));
     setWordWrapMode(QTextOption::NoWrap);
@@ -14,6 +19,12 @@ CodeEditor::CodeEditor(QWidget *parent) : QPlainTextEdit(parent)
 
     updateLineNumberAreaWidth(0);
     highlightCurrentLine();
+}
+
+CodeEditor::~CodeEditor()
+{
+    delete lineNumberArea;
+    delete colorLabel;
 }
 
 void CodeEditor::lineNumberAreaPaintEvent(QPaintEvent *event)
@@ -91,6 +102,24 @@ void CodeEditor::resizeEvent(QResizeEvent *event)
 
     QRect cr = contentsRect();
     lineNumberArea->setGeometry(QRect(cr.left(), cr.top(), lineNumberAreaWidth(), cr.height()));
+}
+
+void CodeEditor::mouseMoveEvent(QMouseEvent *mouseEvent)
+{
+    QTextCursor cursor = cursorForPosition(mouseEvent->pos());
+    cursor.select(QTextCursor::WordUnderCursor);
+    QString strWord = cursor.selectedText();
+    stringPosition = cursor.block().text().indexOf(strWord);
+    if (!strWord.isEmpty() &&
+            cursor.block().text().at(stringPosition - 1) == '#' &&
+            rx.exactMatch(strWord)) {
+        colorLabel->setColor(QColor('#' + strWord));
+        colorLabel->setGeometry(mouseEvent->pos().x() - 16, mouseEvent->pos().y() - 16, 50, 50);
+        colorLabel->setVisible(true);
+    } else {
+        colorLabel->setVisible(false);
+    }
+    QPlainTextEdit::mouseMoveEvent(mouseEvent);
 }
 
 void CodeEditor::updateLineNumberAreaWidth(int newBlockCount)

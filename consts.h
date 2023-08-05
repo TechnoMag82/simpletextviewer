@@ -29,4 +29,14 @@ const QString KEY_THEME_NAME="theme";
 
 const QChar hex1[12] = {'A', 'a', 'B', 'b', 'C', 'c', 'D', 'd', 'E', 'e', 'F', 'f'};
 
+static bool charIsHex(const QChar &in)
+{
+    for (int i = 0; i <= 12; i++) {
+        if (hex1[i] == in) {
+            return true;
+        }
+    }
+    return false;
+}
+
 #endif // CONSTS_H
