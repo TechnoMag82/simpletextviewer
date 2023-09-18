@@ -6,7 +6,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     QApplication::setApplicationName("SimpleTextViewer");
-    QApplication::setApplicationVersion("1.0.5");
+    QApplication::setApplicationVersion("1.0.6");
     MainWindow *w;
     if (argc >= 1) {
         w = new MainWindow(0, argv[1]);

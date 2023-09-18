@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent, QString filePath)
     ui->verticalLayout->addWidget(plainTextEdit);
 
     initSearchLayout();
+    loadSearchHistory();
 
     this->filePath = filePath;
     configurePlainTextEdit();
@@ -39,6 +40,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::quitApp()
 {
+    saveSearchHistory();
     close();
 }
 
@@ -119,6 +121,12 @@ void MainWindow::loadFile()
         QMimeDatabase db;
         QMimeType type = db.mimeTypeForFile(filePath);
         setWindowIcon(QIcon::fromTheme(type.iconName()));
+
+        QClipboard *clipboard = QApplication::clipboard();
+        QString clipboardText = clipboard->text();
+        if (!clipboardText.isNull() && clipboardText.length() <= 32) {
+            searchEdit->setCurrentText(clipboardText);
+        }
     }
 }
 
@@ -200,6 +208,42 @@ void MainWindow::configurePlainTextEdit()
     plainTextEdit->applyColorTheme();
 
     syntaxHighlighter = new CommonSyntaxHighlighter(plainTextEdit->document());
+}
+
+void MainWindow::saveSearchHistory()
+{
+    QString historyPath = QDir::homePath() + SEARCH_HISTORY_PATH;
+    QFile historyFile(historyPath);
+    if (historyFile.open(QIODevice::WriteOnly | QIODevice::Text) == true)
+    {
+        historyFile.reset();
+        QTextStream textStream(&historyFile);
+        textStream.setCodec("UTF-8");
+        for (int i=0; i <= searchEdit->count(); i++) {
+            textStream << searchEdit->itemText(i) << endl;
+        }
+        historyFile.close();
+    }
+}
+
+void MainWindow::loadSearchHistory()
+{
+    QString historyPath = QDir::homePath() + SEARCH_HISTORY_PATH;
+    if (QFile::exists(historyPath)) {
+        QFile historyFile(historyPath);
+        if (historyFile.open(QIODevice::ReadOnly | QIODevice::Text) == true)
+        {
+            QTextStream textStream(&historyFile);
+            textStream.setCodec("UTF-8");
+            while (textStream.atEnd() != true) {
+                QString line = textStream.readLine(0);
+                if (!line.isEmpty()) {
+                    searchEdit->addItem(line);
+                }
+            }
+            historyFile.close();
+        }
+    }
 }
 
 bool MainWindow::isHistoryContains(QString item)

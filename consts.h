@@ -6,6 +6,7 @@ const QString FILE_THEME_EXT = ".theme";
 const QString SYNTAX_CONFIGS_PATH = "/usr/share/simpletextviewer/syntax/";
 const QString THEMES_PATH = "/usr/share/simpletextviewer/themes/";
 const QString CONFIG_PATH = "/.config/simpletextviewer/editor.conf";
+const QString SEARCH_HISTORY_PATH = "/.config/simpletextviewer/search_history";
 const QString BASE_CONFIG_NAME = "syntax_";
 
 const QString KEY_KEYWORDS = "keywords";

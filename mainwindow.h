@@ -11,6 +11,7 @@
 #include <QDir>
 #include <QShortcut>
 #include <QMimeDatabase>
+#include <QClipboard>
 
 #include "appsettingsloader.h"
 #include "syntaxconfigloader.h"
@@ -61,6 +62,8 @@ class MainWindow : public QMainWindow
         void initMainMenu();
         void initSearchLayout();
         void configurePlainTextEdit();
+        void saveSearchHistory();
+        void loadSearchHistory();
         bool isHistoryContains(QString item);
 };
 #endif // MAINWINDOW_H
